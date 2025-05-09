@@ -12,5 +12,5 @@ See test file for basic usage.
 
 ## Side Note
 
-This library is extracted from [lampghost]("http://github.com/Catizard/lampghost"), which is a beatoraja save file GUI viewer. Have it a look!
+This library is extracted from [lampghost](http://github.com/Catizard/lampghost), which is a beatoraja save file GUI viewer. Have it a look!
 
