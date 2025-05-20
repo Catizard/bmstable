@@ -130,6 +130,7 @@ func parseHeaderFromURL(url string) (*DifficultTable, error) {
 	if err := rawHeader.ParseRawCourses(); err != nil {
 		return nil, err
 	}
+	rawHeader.HeaderURL = url
 	return newDifficultTable(&rawHeader), nil
 }
 

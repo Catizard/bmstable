@@ -52,6 +52,9 @@ func TestParseFromURL(t *testing.T) {
 			if err != nil {
 				t.Fatalf("parse: %s", err)
 			}
+			if header.HeaderURL != tt.url {
+				t.Fatalf("expect headerURL: %s, got %s", tt.url, header.HeaderURL)
+			}
 			if header.Symbol != tt.symbol {
 				t.Fatalf("expect symbol: %s, got %s", tt.symbol, header.Symbol)
 			}
