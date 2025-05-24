@@ -67,6 +67,14 @@ func TestParseFromURL(t *testing.T) {
 			if len(header.Contents) == 0 {
 				t.Fatalf("expect contents, got nothing")
 			}
+
+			courseNameSet := make(map[string]any)
+			for _, course := range header.Courses {
+				if _, ok := courseNameSet[course.Name]; ok {
+					t.Fatalf("course: %s is duplicated", course.Name)
+				}
+				courseNameSet[course.Name] = new(any)
+			}
 		})
 	}
 }

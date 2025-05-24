@@ -46,8 +46,9 @@ func (header *ImportHeaderVo) ParseRawCourses() error {
 	if len(header.RawCourses) == 0 {
 		return nil // Okay dokey
 	}
-	for i := range header.RawCourses {
-		if innerArray, isNested := header.RawCourses[i].([]any); isNested {
+	if _, isNested := header.RawCourses[0].([]any); isNested {
+		for i := range header.RawCourses {
+			innerArray := header.RawCourses[i].([]any)
 			for _, data := range innerArray {
 				courseInfo := ImportCourseVo{}
 				if err := mapstructure.Decode(data, &courseInfo); err != nil {
@@ -58,17 +59,17 @@ func (header *ImportHeaderVo) ParseRawCourses() error {
 				}
 				header.Courses = append(header.Courses, courseInfo)
 			}
-		} else {
-			for _, data := range header.RawCourses {
-				courseInfo := ImportCourseVo{}
-				if err := mapstructure.Decode(data, &courseInfo); err != nil {
-					return err
-				}
-				if err := courseInfo.pushupChartsHashField(); err != nil {
-					return fmt.Errorf("course: %s", err)
-				}
-				header.Courses = append(header.Courses, courseInfo)
+		}
+	} else {
+		for _, data := range header.RawCourses {
+			courseInfo := ImportCourseVo{}
+			if err := mapstructure.Decode(data, &courseInfo); err != nil {
+				return err
 			}
+			if err := courseInfo.pushupChartsHashField(); err != nil {
+				return fmt.Errorf("course: %s", err)
+			}
+			header.Courses = append(header.Courses, courseInfo)
 		}
 	}
 
